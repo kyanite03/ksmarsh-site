@@ -12,9 +12,8 @@
       background-color: #fefefe;
       color: #111;
       transition: background-color 0.3s, color 0.3s;
-      box-sizing: border-box;
       line-height: 1.6;
-      min-height: 100vh;
+      box-sizing: border-box;
     }
 
     a {
@@ -25,18 +24,16 @@
       text-decoration: underline;
     }
 
+    h1, h2, p {
+      text-align: center;
+      margin: 0.5em 0;
+    }
     h1 {
       margin-bottom: 0.2em;
       font-size: 2rem;
-      text-align: center;
     }
     h2 {
       margin-top: 2em;
-      text-align: center;
-    }
-    p {
-      margin: 0.5em 0;
-      text-align: center;
     }
 
     /* Top-right buttons sticky */
@@ -46,9 +43,8 @@
       right: 1rem;
       display: flex;
       gap: 0.5rem;
-      z-index: 100;
+      z-index: 1000; /* ensure clickable */
     }
-
     .top-buttons button {
       padding: 0.25em 0.5em;
       border: 1px solid #1a73e8;
@@ -68,6 +64,18 @@
       color: #555;
       line-height: 1.2;
       text-align: left;
+      z-index: 1000;
+    }
+
+    pre {
+      white-space: pre-wrap;
+      text-align: left;
+      max-width: 600px;
+      margin: 1em auto;
+      padding: 1em;
+      background: #f9f9f9;
+      border-radius: 5px;
+      overflow-wrap: break-word;
     }
 
     /* Dark mode styles */
@@ -87,6 +95,10 @@
         top: 0.5rem;
         right: 0.5rem;
       }
+      pre {
+        max-width: 100%;
+        padding: 0.5em;
+      }
     }
   </style>
 </head>
@@ -102,6 +114,29 @@
   <p><a id="cv-link" href="cv.pdf" target="_blank">Download my CV (PDF)</a></p>
 
   <h2>李白诗歌每日一首</h2>
-  <pre id="poem" style="white-space: pre-wrap;"></pre>
+  <pre id="poem">Loading poem...</pre>
 
-  <div class="
+  <div class="footer">
+    +61 402 783 917<br>
+    ABN: 56 764 231 880
+  </div>
+
+  <script>
+    // Poem fetch
+    fetch("li_bai.json")
+      .then(res => res.json())
+      .then(poems => {
+        const dayOfYear = Math.floor(
+          (new Date() - new Date(new Date().getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24)
+        );
+        const poem = poems[dayOfYear % poems.length];
+        const formatted = `${poem.title}\n\n${poem.content.join("\n")}`;
+        document.getElementById("poem").textContent = formatted;
+      })
+      .catch(err => {
+        document.getElementById("poem").textContent = "诗歌加载失败";
+        console.error(err);
+      });
+
+    // Language toggle
+    const englishCont
