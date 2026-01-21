@@ -5,25 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Kai Marsh</title>
   <style>
-    html, body {
+    body {
       margin: 0;
-      padding: 0;
-      height: 100%;
+      padding: 2rem;
       font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
       background-color: #fefefe;
       color: #111;
       transition: background-color 0.3s, color 0.3s;
-      overflow: hidden; /* prevent scrolling */
-    }
-
-    body {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      padding: 2rem;
       box-sizing: border-box;
-      text-align: center;
+      line-height: 1.6;
+      min-height: 100vh;
     }
 
     a {
@@ -37,12 +28,15 @@
     h1 {
       margin-bottom: 0.2em;
       font-size: 2rem;
+      text-align: center;
     }
     h2 {
       margin-top: 2em;
+      text-align: center;
     }
     p {
       margin: 0.5em 0;
+      text-align: center;
     }
 
     /* Top-right buttons sticky */
@@ -52,6 +46,7 @@
       right: 1rem;
       display: flex;
       gap: 0.5rem;
+      z-index: 100;
     }
 
     .top-buttons button {
@@ -86,3 +81,27 @@
         padding: 1rem;
       }
       h1 {
+        font-size: 1.5rem;
+      }
+      .top-buttons {
+        top: 0.5rem;
+        right: 0.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Top-right buttons -->
+  <div class="top-buttons">
+    <button id="lang-toggle">EN / 中文</button>
+    <button id="dark-toggle">🌙</button>
+  </div>
+
+  <h1>Kai Marsh</h1>
+  <p id="description">UniMelb BCom (Finance) | Fluent in Mandarin Chinese</p>
+  <p><a id="cv-link" href="cv.pdf" target="_blank">Download my CV (PDF)</a></p>
+
+  <h2>李白诗歌每日一首</h2>
+  <pre id="poem" style="white-space: pre-wrap;"></pre>
+
+  <div class="
