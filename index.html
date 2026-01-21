@@ -157,13 +157,13 @@ langToggle.addEventListener("click", () => {
 
   if (isEnglish) {
     nameEl.textContent = chineseContent.name;
-    desc.textContent = chineseContent.description;
+    desc.innerHTML = chineseContent.description;
     cvLink.textContent = chineseContent.cv;
     poemTitle.textContent = chineseContent.poemTitle;
     isEnglish = false;
   } else {
     nameEl.textContent = englishContent.name;
-    desc.textContent = englishContent.description;
+    desc.innerHTML = englishContent.description;
     cvLink.textContent = englishContent.cv;
     poemTitle.textContent = englishContent.poemTitle;
     isEnglish = true;
