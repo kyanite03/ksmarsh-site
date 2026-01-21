@@ -118,7 +118,7 @@
           (new Date() - new Date(new Date().getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24)
         );
         const poem = poems[dayOfYear % poems.length];
-        const formatted = `${poem.title}\n\n${poem.content.join("\n")}`;
+        const formatted = `${poemTitle}\n\n${poem.content.join("\n")}`;
         document.getElementById("poem").textContent = formatted;
       })
       .catch(err => {
