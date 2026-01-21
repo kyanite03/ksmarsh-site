@@ -5,19 +5,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Kai Marsh</title>
   <style>
-    body {
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
       font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 2rem;
-      line-height: 1.6;
       background-color: #fefefe;
       color: #111;
       transition: background-color 0.3s, color 0.3s;
-      min-height: 100vh;
+      overflow: hidden; /* prevent scrolling */
+    }
+
+    body {
       display: flex;
       flex-direction: column;
-      position: relative;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem;
+      box-sizing: border-box;
+      text-align: center;
     }
 
     a {
@@ -39,9 +45,9 @@
       margin: 0.5em 0;
     }
 
-    /* Top-right buttons container */
+    /* Top-right buttons sticky */
     .top-buttons {
-      position: absolute;
+      position: fixed;
       top: 1rem;
       right: 1rem;
       display: flex;
@@ -58,16 +64,16 @@
       font-size: 0.8rem;
     }
 
-    /* Sticky footer */
-.footer {
-  position: fixed;
-  bottom: 1rem;
-  left: 2rem;
-  font-size: 0.85rem;
-  color: #555;
-  line-height: 1.2;
-}
-
+    /* Footer sticky bottom-left */
+    .footer {
+      position: fixed;
+      bottom: 1rem;
+      left: 2rem;
+      font-size: 0.85rem;
+      color: #555;
+      line-height: 1.2;
+      text-align: left;
+    }
 
     /* Dark mode styles */
     .dark-mode {
@@ -80,88 +86,3 @@
         padding: 1rem;
       }
       h1 {
-        font-size: 1.5rem;
-      }
-      .top-buttons {
-        top: 0.5rem;
-        right: 0.5rem;
-      }
-    }
-  </style>
-</head>
-<body>
-  <!-- Top-right buttons -->
-  <div class="top-buttons">
-    <button id="lang-toggle">EN / 中文</button>
-    <button id="dark-toggle">🌙</button>
-  </div>
-
-  <h1>Kai Marsh</h1>
-  <p id="description">UniMelb BCom (Finance) | Fluent in Mandarin Chinese</p>
-  <p><a id="cv-link" href="cv.pdf" target="_blank">Download my CV (PDF)</a></p>
-
-  <h2>李白诗歌每日一首</h2>
-  <pre id="poem"></pre>
-
-  <div class="footer">
-    +61 402 783 917<br>
-    ABN: 56 764 231 880
-  </div>
-
-  <script>
-    // Poem fetch
-    fetch("li_bai.json")
-      .then(res => res.json())
-      .then(poems => {
-        const dayOfYear = Math.floor(
-          (new Date() - new Date(new Date().getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24)
-        );
-        const poem = poems[dayOfYear % poems.length];
-        const formatted = `${poem.title}\n\n${poem.content.join("\n")}`;
-        document.getElementById("poem").textContent = formatted;
-      })
-      .catch(err => {
-        document.getElementById("poem").textContent = "诗歌加载失败";
-        console.error(err);
-      });
-
-    // Language toggle
-    const englishContent = {
-      description: "UniMelb BCom (Finance) | Fluent in Mandarin Chinese",
-      cv: "Download my CV (PDF)"
-    };
-
-    const chineseContent = {
-      description: "墨尔本大学 商学士（金融）| 中文流利",
-      cv: "下载我的简历 (PDF)"
-    };
-
-    let isEnglish = true;
-    const langToggle = document.getElementById("lang-toggle");
-    langToggle.addEventListener("click", () => {
-      const desc = document.getElementById("description");
-      const cvLink = document.getElementById("cv-link");
-      if (isEnglish) {
-        desc.textContent = chineseContent.description;
-        cvLink.textContent = chineseContent.cv;
-        isEnglish = false;
-      } else {
-        desc.textContent = englishContent.description;
-        cvLink.textContent = englishContent.cv;
-        isEnglish = true;
-      }
-    });
-
-    // Dark mode toggle with moon/sun
-    const darkToggle = document.getElementById("dark-toggle");
-    darkToggle.addEventListener("click", () => {
-      document.body.classList.toggle("dark-mode");
-      if (document.body.classList.contains("dark-mode")) {
-        darkToggle.textContent = "☀️";
-      } else {
-        darkToggle.textContent = "🌙";
-      }
-    });
-  </script>
-</body>
-</html>
