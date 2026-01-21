@@ -71,4 +71,23 @@
     Toggle Dark Mode
   </button>
 </body>
+  <h2>李白诗歌每日一首</h2>
+<pre id="poem"></pre>
+
+<script>
+fetch("li_bai.json")
+  .then(res => res.json())
+  .then(poems => {
+    const dayOfYear = Math.floor(
+      (new Date() - new Date(new Date().getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24)
+    );
+    const poem = poems[dayOfYear % poems.length];
+    const formatted = `${poem.title}\n\n${poem.content.join("\n")}`;
+    document.getElementById("poem").textContent = formatted;
+  })
+  .catch(err => {
+    document.getElementById("poem").textContent = "诗歌加载失败";
+    console.error(err);
+  });
+</script>
 </html>
