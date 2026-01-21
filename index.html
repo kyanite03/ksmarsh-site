@@ -9,12 +9,15 @@
     body {
       font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
       max-width: 800px;
-      margin: auto;
+      margin: 0 auto;
       padding: 2rem;
       line-height: 1.6;
       background-color: #fefefe;
       color: #111;
       transition: background-color 0.3s, color 0.3s;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
 
     a {
@@ -28,6 +31,9 @@
     h1 {
       margin-bottom: 0.2em;
       font-size: 2rem;
+    }
+    h2 {
+      margin-top: 2em;
     }
     p {
       margin: 0.5em 0;
@@ -50,6 +56,14 @@
       font-size: 0.9rem;
     }
 
+    /* Footer with ABN and mobile */
+    .footer {
+      margin-top: auto; /* push footer to bottom */
+      padding-top: 1rem;
+      font-size: 0.85rem;
+      color: #555;
+    }
+
     @media (max-width: 600px) {
       body {
         padding: 1rem;
@@ -62,32 +76,69 @@
 </head>
 <body>
   <h1>Kai Marsh</h1>
-  <p>Finance Student fluent in Mandarin Chinese</p>
-  <p>Email: <a href="mailto:kai@ksmarsh.net">kai@ksmarsh.net</a></p>
-  <p><a href="cv.pdf" target="_blank">Download my CV (PDF)</a></p>
+  <p id="description">UniMelb BCom (Finance) | Fluent in Mandarin Chinese</p>
+  <p><a id="cv-link" href="cv.pdf" target="_blank">Download my CV (PDF)</a></p>
 
   <!-- Optional dark mode toggle -->
   <button class="toggle-btn" onclick="document.body.classList.toggle('dark-mode')">
     Toggle Dark Mode
   </button>
-</body>
-  <h2>李白诗歌每日一首</h2>
-<pre id="poem"></pre>
 
-<script>
-fetch("li_bai.json")
-  .then(res => res.json())
-  .then(poems => {
-    const dayOfYear = Math.floor(
-      (new Date() - new Date(new Date().getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24)
-    );
-    const poem = poems[dayOfYear % poems.length];
-    const formatted = `${poem.title}\n\n${poem.content.join("\n")}`;
-    document.getElementById("poem").textContent = formatted;
-  })
-  .catch(err => {
-    document.getElementById("poem").textContent = "诗歌加载失败";
-    console.error(err);
-  });
-</script>
+  <!-- Language toggle -->
+  <button id="lang-toggle" class="toggle-btn">中文</button>
+
+  <h2>李白诗歌每日一首</h2>
+  <pre id="poem"></pre>
+
+  <div class="footer">
+    Mobile: 0400 123 456 | ABN: 56 764 231 880
+  </div>
+
+  <script>
+    // Poem fetch
+    fetch("li_bai.json")
+      .then(res => res.json())
+      .then(poems => {
+        const dayOfYear = Math.floor(
+          (new Date() - new Date(new Date().getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24)
+        );
+        const poem = poems[dayOfYear % poems.length];
+        const formatted = `${poem.title}\n\n${poem.content.join("\n")}`;
+        document.getElementById("poem").textContent = formatted;
+      })
+      .catch(err => {
+        document.getElementById("poem").textContent = "诗歌加载失败";
+        console.error(err);
+      });
+
+    // Language toggle
+    const englishContent = {
+      description: "UniMelb BCom (Finance) | Fluent in Mandarin Chinese",
+      cv: "Download my CV (PDF)",
+      toggleBtn: "中文"
+    };
+
+    const chineseContent = {
+      description: "墨尔本大学 商学士（金融）| 中文流利",
+      cv: "下载我的简历 (PDF)",
+      toggleBtn: "English"
+    };
+
+    const langToggle = document.getElementById("lang-toggle");
+    langToggle.addEventListener("click", () => {
+      const desc = document.getElementById("description");
+      const cvLink = document.getElementById("cv-link");
+      
+      if (desc.textContent === englishContent.description) {
+        desc.textContent = chineseContent.description;
+        cvLink.textContent = chineseContent.cv;
+        langToggle.textContent = chineseContent.toggleBtn;
+      } else {
+        desc.textContent = englishContent.description;
+        cvLink.textContent = englishContent.cv;
+        langToggle.textContent = englishContent.toggleBtn;
+      }
+    });
+  </script>
+</body>
 </html>
