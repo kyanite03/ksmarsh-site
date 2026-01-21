@@ -101,13 +101,15 @@
   <p id="description">UniMelb BCom (Finance) | Fluent in Mandarin Chinese</p>
   <p><a id="cv-link" href="cv.pdf" target="_blank">Download my CV (PDF)</a></p>
 
-  <h2>李白诗歌每日一首</h2>
+  <h2 id="poem-title">李白诗歌每日一首</h2>
   <pre id="poem"></pre>
 
   <div class="footer">
-    +61 402 783 917<br>
-    ABN: 56 764 231 880
-  </div>
+  kai@ksmarsh.net<br>
+  +61 402 783 917<br>
+  ABN: 56 764 231 880
+</div>
+
 
   <script>
     // Poem fetch
@@ -130,14 +132,17 @@
 const englishContent = {
   name: "Kai S Marsh",
   description: "UniMelb BCom (Finance) | Fluent in Mandarin Chinese",
-  cv: "Download my CV (PDF)"
+  cv: "Download my CV (PDF)",
+  poemTitle: "Li Bai Poem of the Day"
 };
 
 const chineseContent = {
   name: "马凯",
   description: "墨尔本大学 商学士（金融）| 中文流利",
-  cv: "下载我的简历 (PDF)"
+  cv: "下载我的简历 (PDF)",
+  poemTitle: "李白诗歌每日一首"
 };
+
 
 let isEnglish = true;
 const langToggle = document.getElementById("lang-toggle");
