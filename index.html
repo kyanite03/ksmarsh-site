@@ -6,14 +6,18 @@
   <title>Kai Marsh</title>
   <style>
     body {
-      margin: 0;
-      padding: 2rem;
       font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2rem;
+      line-height: 1.6;
       background-color: #fefefe;
       color: #111;
       transition: background-color 0.3s, color 0.3s;
-      line-height: 1.6;
-      box-sizing: border-box;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      position: relative;
     }
 
     a {
@@ -24,10 +28,6 @@
       text-decoration: underline;
     }
 
-    h1, h2, p {
-      text-align: center;
-      margin: 0.5em 0;
-    }
     h1 {
       margin-bottom: 0.2em;
       font-size: 2rem;
@@ -35,16 +35,19 @@
     h2 {
       margin-top: 2em;
     }
+    p {
+      margin: 0.5em 0;
+    }
 
-    /* Top-right buttons sticky */
+    /* Top-right buttons container */
     .top-buttons {
-      position: fixed;
+      position: absolute;
       top: 1rem;
       right: 1rem;
       display: flex;
       gap: 0.5rem;
-      z-index: 1000; /* ensure clickable */
     }
+
     .top-buttons button {
       padding: 0.25em 0.5em;
       border: 1px solid #1a73e8;
@@ -55,28 +58,16 @@
       font-size: 0.8rem;
     }
 
-    /* Footer sticky bottom-left */
-    .footer {
-      position: fixed;
-      bottom: 1rem;
-      left: 2rem;
-      font-size: 0.85rem;
-      color: #555;
-      line-height: 1.2;
-      text-align: left;
-      z-index: 1000;
-    }
+    /* Sticky footer */
+.footer {
+  position: fixed;
+  bottom: 1rem;
+  left: 2rem;
+  font-size: 0.85rem;
+  color: #555;
+  line-height: 1.2;
+}
 
-    pre {
-      white-space: pre-wrap;
-      text-align: left;
-      max-width: 600px;
-      margin: 1em auto;
-      padding: 1em;
-      background: #f9f9f9;
-      border-radius: 5px;
-      overflow-wrap: break-word;
-    }
 
     /* Dark mode styles */
     .dark-mode {
@@ -95,10 +86,6 @@
         top: 0.5rem;
         right: 0.5rem;
       }
-      pre {
-        max-width: 100%;
-        padding: 0.5em;
-      }
     }
   </style>
 </head>
@@ -114,7 +101,7 @@
   <p><a id="cv-link" href="cv.pdf" target="_blank">Download my CV (PDF)</a></p>
 
   <h2>李白诗歌每日一首</h2>
-  <pre id="poem">Loading poem...</pre>
+  <pre id="poem"></pre>
 
   <div class="footer">
     +61 402 783 917<br>
@@ -139,4 +126,42 @@
       });
 
     // Language toggle
-    const englishCont
+    const englishContent = {
+      description: "UniMelb BCom (Finance) | Fluent in Mandarin Chinese",
+      cv: "Download my CV (PDF)"
+    };
+
+    const chineseContent = {
+      description: "墨尔本大学 商学士（金融）| 中文流利",
+      cv: "下载我的简历 (PDF)"
+    };
+
+    let isEnglish = true;
+    const langToggle = document.getElementById("lang-toggle");
+    langToggle.addEventListener("click", () => {
+      const desc = document.getElementById("description");
+      const cvLink = document.getElementById("cv-link");
+      if (isEnglish) {
+        desc.textContent = chineseContent.description;
+        cvLink.textContent = chineseContent.cv;
+        isEnglish = false;
+      } else {
+        desc.textContent = englishContent.description;
+        cvLink.textContent = englishContent.cv;
+        isEnglish = true;
+      }
+    });
+
+    // Dark mode toggle with moon/sun
+    const darkToggle = document.getElementById("dark-toggle");
+    darkToggle.addEventListener("click", () => {
+      document.body.classList.toggle("dark-mode");
+      if (document.body.classList.contains("dark-mode")) {
+        darkToggle.textContent = "☀️";
+      } else {
+        darkToggle.textContent = "🌙";
+      }
+    });
+  </script>
+</body>
+</html>
