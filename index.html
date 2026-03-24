@@ -107,7 +107,12 @@
   <p id="description"> UniMelb Student, Enrolled BCom (Finance & Statistics) <br> Fluent Mandarin Chinese</p>
   <p><a id="cv-link" href="cv.pdf" target="_blank">Download my CV (PDF)</a></p>
 
-<h2 id="poemTitle"></h2>
+<h2 id="poemTitle">
+  Poem of the Day
+  <label style="font-size: 0.7em; margin-left: 0.5em;">
+    <input type="checkbox" id="simplified-toggle"> 简体
+  </label>
+</h2>
 <div id="poemContent"></div>
 
 
@@ -143,6 +148,33 @@
     poemContent.textContent = "诗歌加载失败";
     console.error(err);
   });
+
+// Reference checkbox
+const simplifiedToggle = document.getElementById("simplified-toggle");
+
+// Function to display a poem (Poem of the Day or Random)
+function displayPoem(poem) {
+  poemTitle.firstChild.textContent = poem.title; // keep heading text intact
+  let content = poem.content.join("<br>");
+
+  if (simplifiedToggle.checked) {
+    content = traditionalToSimplified(content);
+  }
+
+  poemContent.innerHTML = content;
+}
+
+// Example simple conversion (for full coverage, use opencc-js)
+function traditionalToSimplified(str) {
+  return str.replace(/詩/g, "诗").replace(/歌/g, "歌"); // add more rules
+}
+
+// Re-render poem when checkbox is toggled
+simplifiedToggle.addEventListener("change", () => {
+  const currentTitle = poemTitle.firstChild.textContent;
+  const poem = poemsData.find(p => p.title === currentTitle);
+  if (poem) displayPoem(poem);
+});
 
     // Language toggle
 const englishContent = {
