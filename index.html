@@ -121,26 +121,28 @@
   <script>
     // Poem fetch
     fetch("li_bai.json")
-      .then(res => res.json())
-      .then(poems => {
-        #Show poem of the day
-        const dayOfYear = Math.floor(
-          (new Date() - new Date(new Date().getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24)
-        );
-        const poem = poems[dayOfYear % poems.length];
-        const formatted = `${poem.title}\n\n${poem.content.join("\n")}`;
-        document.getElementById("poem").textContent = formatted;
-        // Random button handler inside the same scope
+  .then(res => res.json())
+  .then(poems => {
+    // Show Poem of the Day
+    const dayOfYear = Math.floor(
+      (new Date() - new Date(new Date().getFullYear(), 0, 0)) / (1000*60*60*24)
+    );
+    const poem = poems[dayOfYear % poems.length];
+    poemTitle.textContent = poem.title;
+    poemContent.innerHTML = poem.content.join("<br>");
+
+    // Random button
     randomBtn.addEventListener("click", () => {
       const randomPoem = poems[Math.floor(Math.random() * poems.length)];
       poemTitle.textContent = randomPoem.title;
       poemContent.innerHTML = randomPoem.content.join("<br>");
     });
-      })
-      .catch(err => {
-        document.getElementById("poem").textContent = "诗歌加载失败";
-        console.error(err);
-      });
+  })
+  .catch(err => {
+    poemTitle.textContent = "";
+    poemContent.textContent = "诗歌加载失败";
+    console.error(err);
+  });
 
     // Language toggle
 const englishContent = {
