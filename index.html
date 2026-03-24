@@ -107,14 +107,11 @@
   <p id="description"> UniMelb Student, Enrolled BCom (Finance & Statistics) <br> Fluent Mandarin Chinese</p>
   <p><a id="cv-link" href="cv.pdf" target="_blank">Download my CV (PDF)</a></p>
 
-<h2 id="poemTitle">
-  Poem of the Day
-  <label style="font-size: 0.7em; margin-left: 0.5em;">
-    <input type="checkbox" id="simplified-toggle"> 简体
-  </label>
-</h2>
+<h2 id="poemTitle">Poem of the Day</h2>
+<label style="font-size:0.7em; margin-left:0.5em;">
+  <input type="checkbox" id="simplified-toggle"> 简体
+</label>
 <div id="poemContent"></div>
-
 
   
   <div class="footer">
@@ -123,28 +120,31 @@
   ABN: 56 764 231 880
 </div>
 
-  <script>
-    // Poem fetch
-    fetch("li_bai.json")
+  // Poem fetch
+fetch("li_bai.json")
   .then(res => res.json())
   .then(poems => {
+    // Store poems globally for simplified toggle
+    window.poemsData = poems;
+
     // Show Poem of the Day
     const dayOfYear = Math.floor(
       (new Date() - new Date(new Date().getFullYear(), 0, 0)) / (1000*60*60*24)
     );
     const poem = poems[dayOfYear % poems.length];
-    poemTitle.textContent = poem.title;
-    poemContent.innerHTML = poem.content.join("<br>");
+    // Display poem using original logic
+    poemTitle.textContent = "Poem of the Day"; // heading stays fixed
+    poemContent.innerHTML = `${poem.title}<br><br>${poem.content.join("<br>")}`;
 
     // Random button
     randomBtn.addEventListener("click", () => {
       const randomPoem = poems[Math.floor(Math.random() * poems.length)];
-      poemTitle.textContent = randomPoem.title;
-      poemContent.innerHTML = randomPoem.content.join("<br>");
+      poemTitle.textContent = "Poem of the Day"; // heading stays fixed
+      poemContent.innerHTML = `${randomPoem.title}<br><br>${randomPoem.content.join("<br>")}`;
     });
   })
   .catch(err => {
-    poemTitle.textContent = "";
+    poemTitle.textContent = "Poem of the Day";
     poemContent.textContent = "诗歌加载失败";
     console.error(err);
   });
@@ -152,29 +152,32 @@
 // Reference checkbox
 const simplifiedToggle = document.getElementById("simplified-toggle");
 
-// Function to display a poem (Poem of the Day or Random)
-function displayPoem(poem) {
-  poemTitle.firstChild.textContent = poem.title; // keep heading text intact
-  let content = poem.content.join("<br>");
+// Re-render poem in simplified Chinese when checkbox is toggled
+simplifiedToggle.addEventListener("change", () => {
+  if (!window.poemsData) return;
 
+  // Get currently displayed poem title (first line of poemContent)
+  const lines = poemContent.innerHTML.split("<br>");
+  const currentPoemTitle = lines[0];
+
+  // Find poem object
+  const poem = window.poemsData.find(p => p.title === currentPoemTitle);
+  if (!poem) return;
+
+  let content = poem.content.join("<br>");
   if (simplifiedToggle.checked) {
-    content = traditionalToSimplified(content);
+    content = traditionalToSimplified(`${poem.title}<br><br>${content}`);
+  } else {
+    content = `${poem.title}<br><br>${content}`;
   }
 
   poemContent.innerHTML = content;
-}
+});
 
 // Example simple conversion (for full coverage, use opencc-js)
 function traditionalToSimplified(str) {
-  return str.replace(/詩/g, "诗").replace(/歌/g, "歌"); // add more rules
+  return str.replace(/詩/g, "诗").replace(/歌/g, "歌"); // add more rules as needed
 }
-
-// Re-render poem when checkbox is toggled
-simplifiedToggle.addEventListener("change", () => {
-  const currentTitle = poemTitle.firstChild.textContent;
-  const poem = poemsData.find(p => p.title === currentTitle);
-  if (poem) displayPoem(poem);
-});
 
     // Language toggle
 const englishContent = {
