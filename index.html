@@ -100,7 +100,7 @@
   <div class="top-buttons">
     <button id="lang-toggle">EN / 中文</button>
     <button id="dark-toggle">🌙</button>
-    <button id="randomBtn">Random Poem </button>
+    <button id="randomBtn">🎲Poem </button>
   </div>
 
   <h1 id="name">Kai S Marsh</h1>
@@ -173,12 +173,14 @@ langToggle.addEventListener("click", () => {
     desc.innerHTML = chineseContent.description;
     cvLink.textContent = chineseContent.cv;
     poemTitle.textContent = chineseContent.poemTitle;
+    randomBtn.textContent = "🎲Poem";
     isEnglish = false;
   } else {
     nameEl.textContent = englishContent.name;
     desc.innerHTML = englishContent.description;
     cvLink.textContent = englishContent.cv;
     poemTitle.textContent = englishContent.poemTitle;
+    randomBtn.textContent = "🎲随机诗歌";
     isEnglish = true;
   }
 });
