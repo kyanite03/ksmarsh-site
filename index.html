@@ -108,11 +108,10 @@
   <p><a id="cv-link" href="cv.pdf" target="_blank">Download my CV (PDF)</a></p>
 
 <h2 id="poemTitle">Poem of the Day</h2>
-<label style="font-size:0.7em; margin-left:0.5em;">
-  <input type="checkbox" id="simplified-toggle"> 简体
-</label>
+<!-- <label style="font-size:0.7em; margin-left:0.5em;">
+ <input type="checkbox" id="simplified-toggle"> 简体
+</label> -->
 <div id="poemContent"></div>
-
   
   <div class="footer">
   kai@ksmarsh.net<br>
@@ -153,7 +152,7 @@ fetch("li_bai.json")
 const simplifiedToggle = document.getElementById("simplified-toggle");
 
 // Re-render poem in simplified Chinese when checkbox is toggled
-simplifiedToggle.addEventListener("change", () => {
+/*simplifiedToggle.addEventListener("change", () => {
   if (!window.poemsData) return;
 
   // Get currently displayed poem title (first line of poemContent)
@@ -178,7 +177,7 @@ simplifiedToggle.addEventListener("change", () => {
 function traditionalToSimplified(str) {
   return str.replace(/詩/g, "诗").replace(/歌/g, "歌"); // add more rules as needed
 }
-
+*/
     // Language toggle
 const englishContent = {
   name: "Kai S Marsh",
